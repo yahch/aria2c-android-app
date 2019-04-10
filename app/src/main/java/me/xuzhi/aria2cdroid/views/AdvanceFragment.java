@@ -223,7 +223,7 @@ public class AdvanceFragment extends Fragment {
 
         }
 
-        Utils.writeConsoleLog(mListener, 3, "read config success");
+        //Utils.writeConsoleLog(mListener, 3, "read config success");
 
     }
 

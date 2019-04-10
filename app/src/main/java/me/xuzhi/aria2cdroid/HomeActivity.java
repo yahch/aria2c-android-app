@@ -260,9 +260,6 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (logsFragment != null && logsFragment.getLogView3() != null) {
-            logsFragment.getLogView3().d(id + "");
-        }
 
         switch (id) {
             case R.id.nav_logs:
