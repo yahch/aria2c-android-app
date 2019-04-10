@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_logs"
+            android:icon="@drawable/ic_services"
+            android:title="@string/app_menu_logs" />
+        <item
+            android:id="@+id/nav_advance"
+            android:icon="@drawable/ic_config"
+            android:title="@string/app_menu_advance" />
+    </group>
+
+    <item android:title="@string/app_menu_more">
+        <menu>
+
+            <item
+                android:id="@+id/nav_source"
+                android:icon="@drawable/ic_ariang"
+                android:title="@string/app_menu_source" />
+
+            <item
+                android:id="@+id/nav_rate"
+                android:icon="@drawable/ic_licence"
+                android:title="@string/app_menu_rate" />
+        </menu>
+    </item>
+
+</menu>

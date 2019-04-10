@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name" translatable="false">Aria2</string>
+    <string name="service_is_running">Server Not Running...</string>
+    <string name="please_wait">Please Wait...</string>
+    <string name="starting">Starting...</string>
+    <string name="stopping">Stoping...</string>
+    <string name="setting">Setting</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="port">Port</string>
+    <string name="about">About</string>
+    <string name="open_source_licence">Licence</string>
+    <string name="rate">Rate me</string>
+    <string name="update_tracker">Update Trackers</string>
+    <string name="request_google_play">No google play store found</string>
+    <string name="update_tracker_success">Update trackers successful</string>
+    <string name="update_tracker_fail">Update trackers failed</string>
+    <string name="service_start_alrerady">Service already start,The PID is</string>
+    <string name="listen_service_fail">Listen aria2 service failed</string>
+    <string name="listen_service_success">listen aria2 service successful</string>
+    <string name="service_stop_alrerady">service stopped already</string>
+    <string name="app_description">Aria2 Server For Android Platform,Download Http/Https/ed2k/torrent very fast</string>
+    <string name="app_project">The App is based on Aria2c,https://github.com/aria2/aria2</string>
+    <string name="app_contact">E-mail:xyq@dr.com</string>
+    <string name="log_output">Enable log output</string>
+    <string name="rpc_secret">RPC-Secret</string>
+    <string name="download_dir">Download location</string>
+    <string name="input_trackers">Input trackers,split them by comma</string>
+    <string name="try_luck">Try your luck</string>
+    <string name="stopped">Stopped</string>
+    <string name="open_aria2_client">Open aria2 client</string>
+    <string name="no_aria2_client">No Aria2App found on your phone,Will take you to download from app store</string>
+    <string name="title_activity_home" translatable="false">HomeActivity</string>
+
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
+    <string name="action_settings" translatable="false">Settings</string>
+
+    <!-- app -->
+    <string name="app_menu_service">Service</string>
+    <string name="app_menu_logs">Service</string>
+    <string name="app_menu_advance">Configuration</string>
+    <string name="app_menu_rate">Licences</string>
+    <string name="app_menu_source">Aria-Web</string>
+    <string name="app_menu_more">More</string>
+    <string name="app_string_save_config_success">Save successful!</string>
+    <string name="app_string_advance_config">Advance</string>
+    <string name="app_string_advance_warn">It is dangerous to modify the parameters below, unless you know what to modify and it will take effect when the checkbox is checked.</string>
+    <string name="app_string_config_miss">Configuration file not exist</string>
+    <string name="app_string_licence">Licence</string>
+    <string name="app_string_service_running">Aria2c for android service is running...</string>
+    <string name="app_string_my_source">•This app is open source software under BSD licence.Visit the link below</string>
+    <string name="app_string_what_module_used">•The following modules and codes are applied in the app</string>
+    <string name="app_string_project_url">•Project URL:https://estermont.wordpress.com/aria2android-server/</string>
+    <string name="app_string_project_thanks">Thanks to my wife Sounion (≧▽≦*)</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="app_string_get_config_more">Visit this web go get details:https://aria2.github.io/manual/en/html/aria2c.html#options</string>
+
+</resources>

@@ -1,0 +1,12 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="me.xuzhi.aria2cdroid.views.LogsFragment">
+
+    <me.xuzhi.aria2cdroid.LogView3
+        android:id="@+id/mainLog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></me.xuzhi.aria2cdroid.LogView3>
+
+</FrameLayout>

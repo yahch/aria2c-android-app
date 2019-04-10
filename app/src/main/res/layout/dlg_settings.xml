@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="10dp">
+
+    <Switch
+        android:id="@+id/switchDebugLog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:text="@string/log_output" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:text="@string/rpc_secret"/>
+
+    <EditText
+        android:id="@+id/edtSecret"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:inputType="text"
+        android:padding="5dp"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:text="@string/download_dir"/>
+
+    <EditText
+        android:id="@+id/edtPath"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:inputType="text"
+        android:padding="5dp"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:text="@string/input_trackers" />
+
+    <EditText
+        android:id="@+id/edtTrackers"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/border"
+        android:ems="10"
+        android:gravity="top|left"
+        android:inputType="text|textMultiLine"
+        android:padding="5dp"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/btnUpdateTrackers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/try_luck" />
+
+</LinearLayout>
