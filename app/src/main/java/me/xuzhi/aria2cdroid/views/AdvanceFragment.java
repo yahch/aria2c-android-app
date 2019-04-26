@@ -2,6 +2,7 @@ package me.xuzhi.aria2cdroid.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -198,6 +199,7 @@ public class AdvanceFragment extends Fragment {
     private void initUI(Map<String, String> config, View viewLayout) {
 
         LinearLayout view = viewLayout.findViewById(R.id.configsLayout);
+        int textColor = Color.parseColor("#2B2B2B");
 
         for (Map.Entry<String, String> s : config.entrySet()) {
 
@@ -215,6 +217,9 @@ public class AdvanceFragment extends Fragment {
             CheckBox checkBox = new CheckBox(getActivity().getApplicationContext());
             checkBox.setChecked(!s.getKey().startsWith("#"));
 
+            checkBox.setTextColor(textColor);
+            tv.setTextColor(textColor);
+            editText.setTextColor(textColor);
 
             linearLayout.addView(checkBox);
             linearLayout.addView(tv);
