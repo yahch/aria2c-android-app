@@ -65,6 +65,7 @@ public class HomeActivity extends AppCompatActivity
     private Aria2Service aria2Service;
     private Intent intentService;
     private Map<String, String> aria2config;
+    private Menu menuSettings;
 
     private ServiceConnection conn = new ServiceConnection() {
 
@@ -223,6 +224,7 @@ public class HomeActivity extends AppCompatActivity
         }
     };
 
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -236,9 +238,11 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.home, menu);
-        //return true;
-        return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.home, menu);
+        menuSettings = menu;
+        updateActionbarMenuState(false);
+        return true;
+        //return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -248,11 +252,20 @@ public class HomeActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            item.setVisible(false);
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateActionbarMenuState(boolean status) {
+        if (menuSettings != null && menuSettings.size() > 0) {
+            for (int i = 0; i < menuSettings.size(); i++) {
+                menuSettings.getItem(i).setVisible(status);
+            }
+        }
     }
 
     @SuppressLint("RestrictedApi")
@@ -269,6 +282,7 @@ public class HomeActivity extends AppCompatActivity
                     fab.setVisibility(View.VISIBLE);
                     resetFabStatus();
                     Rigger.getRigger(this).showFragment(Rigger.getRigger(fragments[0]).getFragmentTAG());
+                    updateActionbarMenuState(false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -281,6 +295,7 @@ public class HomeActivity extends AppCompatActivity
                     resetFabStatus();
                     fab.setImageResource(R.drawable.ic_save);
                     Rigger.getRigger(this).showFragment(Rigger.getRigger(fragments[1]).getFragmentTAG());
+                    updateActionbarMenuState(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -291,6 +306,7 @@ public class HomeActivity extends AppCompatActivity
                     getSupportActionBar().setTitle(getString(R.string.app_menu_source));
                     fab.setVisibility(View.INVISIBLE);
                     Rigger.getRigger(this).showFragment(Rigger.getRigger(fragments[2]).getFragmentTAG());
+                    updateActionbarMenuState(false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -301,6 +317,7 @@ public class HomeActivity extends AppCompatActivity
                     getSupportActionBar().setTitle(getString(R.string.app_menu_rate));
                     fab.setVisibility(View.INVISIBLE);
                     Rigger.getRigger(this).showFragment(Rigger.getRigger(fragments[3]).getFragmentTAG());
+                    updateActionbarMenuState(false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

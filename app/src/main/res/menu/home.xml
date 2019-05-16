@@ -2,8 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:id="@+id/action_import_aria2"
+        android:title="@string/action_menu_import_aria2"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_export_aria2"
+        android:title="@string/action_menu_export_aria2"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_update_trackers"
+        android:title="@string/action_menu_update_trackers"
         app:showAsAction="never" />
 </menu>

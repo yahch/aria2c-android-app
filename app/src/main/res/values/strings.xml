@@ -58,4 +58,8 @@
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="app_string_get_config_more">Visit this web go get details:https://aria2.github.io/manual/en/html/aria2c.html#options</string>
 
+    <string name="action_menu_update_trackers">Update trackers</string>
+    <string name="action_menu_import_aria2">Import aria2.conf</string>
+    <string name="action_menu_export_aria2">Export aria2.conf</string>
+
 </resources>
