@@ -119,32 +119,37 @@ public class AdvanceFragment extends Fragment {
     }
 
     @SuppressLint("CheckResult")
+    private void loadandshowConfig() {
+        Observable<Map<String, String>> observable = Observable.create(new ObservableOnSubscribe<Map<String, String>>() {
+            @Override
+            public void subscribe(final ObservableEmitter<Map<String, String>> emitter) throws Exception {
+                Map<String, String> config = Utils.readAria2Config(getContext());
+                emitter.onNext(config);
+            }
+        });
+
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(new Consumer<Map<String, String>>() {
+                    @Override
+                    public void accept(Map<String, String> s) throws Exception {
+                        if (s != null && s.size() > 0) {
+                            initUI(s, view);
+                            pbar.setVisibility(View.INVISIBLE);
+                            mainLayout.setVerticalGravity(View.VISIBLE);
+                        }
+                    }
+                });
+    }
+
+    @SuppressLint("CheckResult")
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
             pbar.setVisibility(View.VISIBLE);
             mainLayout.setVerticalGravity(View.INVISIBLE);
-            Observable<Map<String, String>> observable = Observable.create(new ObservableOnSubscribe<Map<String, String>>() {
-                @Override
-                public void subscribe(final ObservableEmitter<Map<String, String>> emitter) throws Exception {
-                    Map<String, String> config = Utils.readAria2Config(getContext());
-                    emitter.onNext(config);
-                }
-            });
-
-            observable.observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.newThread())
-                    .subscribe(new Consumer<Map<String, String>>() {
-                        @Override
-                        public void accept(Map<String, String> s) throws Exception {
-                            if (s != null && s.size() > 0) {
-                                initUI(s, view);
-                                pbar.setVisibility(View.INVISIBLE);
-                                mainLayout.setVerticalGravity(View.VISIBLE);
-                            }
-                        }
-                    });
+            loadandshowConfig();
         } else {
             LinearLayout vw = view.findViewById(R.id.configsLayout);
             if (vw != null)
@@ -166,37 +171,60 @@ public class AdvanceFragment extends Fragment {
 
     public void saveSettings() {
 
-        LinearLayout view = getActivity().findViewById(R.id.configsLayout);
-        StringBuilder stringBuilder = new StringBuilder();
+        try {
 
-        if (view != null && view.getChildCount() > 0) {
-            for (int i = 0; i < view.getChildCount(); i++) {
-                LinearLayout item = (LinearLayout) view.getChildAt(i);
+            LinearLayout view = getActivity().findViewById(R.id.configsLayout);
+            StringBuilder stringBuilder = new StringBuilder();
 
-                CheckBox checkBox = (CheckBox) item.getChildAt(0);
-                TextView tv = (TextView) item.getChildAt(1);
-                EditText editText = (EditText) item.getChildAt(2);
-                if (checkBox != null && checkBox.isChecked()) {
-                    stringBuilder.append(tv.getText()).append(" = ").append(editText.getText().toString()).append("\n");
-                } else {
-                    stringBuilder.append("#").append(tv.getText()).append(" = ").append(editText.getText().toString()).append("\n");
+            if (view != null && view.getChildCount() > 0) {
+                for (int i = 0; i < view.getChildCount(); i++) {
+                    LinearLayout item = (LinearLayout) view.getChildAt(i);
+
+                    CheckBox checkBox = (CheckBox) item.getChildAt(0);
+                    TextView tv = (TextView) item.getChildAt(1);
+                    EditText editText = (EditText) item.getChildAt(2);
+                    if (checkBox != null && checkBox.isChecked()) {
+                        stringBuilder.append(tv.getText()).append(" = ").append(editText.getText().toString()).append("\n");
+                    } else {
+                        stringBuilder.append("#").append(tv.getText()).append(" = ").append(editText.getText().toString()).append("\n");
+                    }
                 }
             }
-        }
 
-        try {
             Files.write(stringBuilder.toString().getBytes(), Utils.getConfigFile(getContext()));
             Message message = new Message();
             message.what = SAVE_CONFIG_SUCCESS;
             mListener.onFragmentInteraction(message);
         } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(getContext(), getString(R.string.unknow_error), Toast.LENGTH_LONG).show();
         }
+    }
 
+    public void reloadSettings() {
 
+        loadandshowConfig();
+    }
+
+    private void clearAllNodes() {
+
+        try {
+            LinearLayout view = getActivity().findViewById(R.id.configsLayout);
+
+            if (view != null && view.getChildCount() > 0) {
+                for (int i = 0; i < view.getChildCount(); i++) {
+                    LinearLayout item = (LinearLayout) view.getChildAt(i);
+                    item.removeAllViews();
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void initUI(Map<String, String> config, View viewLayout) {
+
+        clearAllNodes();
 
         LinearLayout view = viewLayout.findViewById(R.id.configsLayout);
         int textColor = Color.parseColor("#2B2B2B");

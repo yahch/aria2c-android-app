@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -31,18 +32,23 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.FileIOUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.google.common.base.Strings;
 import com.jkb.fragment.rigger.annotation.Puppet;
 import com.jkb.fragment.rigger.rigger.Rigger;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.util.Map;
 
+import cz.msebera.android.httpclient.Header;
 import me.xuzhi.aria2cdroid.views.AdvanceFragment;
 import me.xuzhi.aria2cdroid.views.LicenceFragment;
 import me.xuzhi.aria2cdroid.views.LogsFragment;
@@ -66,6 +72,8 @@ public class HomeActivity extends AppCompatActivity
     private Intent intentService;
     private Map<String, String> aria2config;
     private Menu menuSettings;
+
+    private static final int SHOW_CHOOSE_CONFIG = 304;
 
     private ServiceConnection conn = new ServiceConnection() {
 
@@ -251,13 +259,105 @@ public class HomeActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            item.setVisible(false);
-//            return true;
-//        }
+        if (id == R.id.action_export_aria2) {
+            exportConfig();
+        } else if (id == R.id.action_import_aria2) {
+            importConfig();
+            aria2config = Utils.readAria2Config(getApplicationContext());
+            try {
+                advanceFragment.reloadSettings();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } else if (id == R.id.action_update_trackers) {
+            doUpdateTrackersBack();
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+//    private void showChooseConfigFile() {
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        intent.setType("text/config");
+//        intent.addCategory(Intent.CATEGORY_OPENABLE);
+//        startActivityForResult(intent, SHOW_CHOOSE_CONFIG);
+//    }
+
+    private void importConfig() {
+        try {
+
+            File exportFile = new File(Environment.getExternalStorageDirectory(), "aria2.conf");
+            if (!exportFile.exists()) {
+                Snackbar.make(fab, getString(R.string.action_menu_import_aria2_missing), Snackbar.LENGTH_LONG)
+                        .setAction(getString(R.string.action_menu_import_aria2_title), null).show();
+                return;
+            }
+            String confText = FileIOUtils.readFile2String(exportFile);
+            FileIOUtils.writeFileFromString(Utils.getConfigFile(getApplicationContext()), confText);
+            Snackbar.make(fab, getString(R.string.action_menu_import_aria2_success), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.action_menu_import_aria2_title), null).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Snackbar.make(fab, getString(R.string.action_menu_import_aria2_fail), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.action_menu_import_aria2_title), null).show();
+        }
+    }
+
+    private void doUpdateTrackersBack() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.action_menu_update_trackers_title));
+        builder.setMessage(getString(R.string.action_menu_update_trackers_message));
+        builder.setCancelable(false);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        TrackerUpdater tcu = new TrackerUpdater();
+        tcu.update(getApplicationContext(), new TrackerUpdater.Callback() {
+            @Override
+            public void onComplete(String trackers) {
+                //Toast.makeText(getApplicationContext(), trackers, Toast.LENGTH_LONG).show();
+                alertDialog.dismiss();
+                aria2config.put("bt-tracker", trackers);
+                String confText = Utils.dumpAria2Config(aria2config);
+                FileIOUtils.writeFileFromString(Utils.getConfigFile(getApplicationContext()), confText);
+                Snackbar.make(fab, getString(R.string.action_menu_update_trackers_success), Snackbar.LENGTH_LONG)
+                        .setAction(getString(R.string.action_menu_update_trackers_title), null).show();
+                try {
+                    advanceFragment.reloadSettings();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                //Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                alertDialog.dismiss();
+                Snackbar.make(fab, getString(R.string.action_menu_update_trackers_fail), Snackbar.LENGTH_LONG)
+                        .setAction(getString(R.string.action_menu_update_trackers_title), null).show();
+            }
+        });
+
+    }
+
+    private void exportConfig() {
+        try {
+            String text = "";
+            if (!Utils.getConfigFile(getApplicationContext()).exists()) {
+                String cfg = Utils.createDefaultConfig(getApplicationContext());
+                com.google.common.io.Files.write(cfg.getBytes(), Utils.getConfigFile(getApplicationContext()));
+            }
+            text = FileIOUtils.readFile2String(Utils.getConfigFile(getApplicationContext()));
+            File exportFile = new File(Environment.getExternalStorageDirectory(), "aria2.conf");
+            FileIOUtils.writeFileFromString(exportFile, text);
+            Snackbar.make(fab, getString(R.string.action_menu_export_aria2_success), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.action_menu_export_aria2_title), null).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Snackbar.make(fab, getString(R.string.action_menu_export_aria2_fail), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.action_menu_export_aria2_title), null).show();
+        }
     }
 
     private void updateActionbarMenuState(boolean status) {

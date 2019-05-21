@@ -52,4 +52,20 @@
     <string name="action_menu_import_aria2">导入 aria2.conf</string>
     <string name="action_menu_export_aria2">导出 aria2.conf</string>
 
+    <string name="action_menu_export_aria2_title">导出</string>
+    <string name="action_menu_export_aria2_success">已经导出配置到SDCard根目录了</string>
+    <string name="action_menu_export_aria2_fail">导出出现错误</string>
+
+    <string name="action_menu_import_aria2_title">导入</string>
+    <string name="action_menu_import_aria2_success">导入配置成功</string>
+    <string name="action_menu_import_aria2_fail">导入配置失败</string>
+    <string name="action_menu_import_aria2_missing">在SDCard根目录没有发现名为aria2.conf配置文件</string>
+
+    <string name="action_menu_update_trackers_title">更新Trackers</string>
+    <string name="action_menu_update_trackers_message">正在更新，请稍等...</string>
+    <string name="action_menu_update_trackers_success">更新成功</string>
+    <string name="action_menu_update_trackers_fail">更新失败</string>
+
+    <string name="unknow_error">发生一个小错误.</string>
+
 </resources>

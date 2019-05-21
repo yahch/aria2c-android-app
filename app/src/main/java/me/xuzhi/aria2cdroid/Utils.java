@@ -208,6 +208,15 @@ public class Utils {
         return config;
     }
 
+    public static String dumpAria2Config(Map<String, String> paras) {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : paras.entrySet()) {
+            sb.append(entry.getKey()).append(" ").append("=").append(" ").append(entry.getValue());
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
     public static File getConfigFile(Context context) {
         return new File(context.getFilesDir(), "aria2.conf");
     }

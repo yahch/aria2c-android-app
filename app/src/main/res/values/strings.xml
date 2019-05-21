@@ -62,4 +62,20 @@
     <string name="action_menu_import_aria2">Import aria2.conf</string>
     <string name="action_menu_export_aria2">Export aria2.conf</string>
 
+    <string name="action_menu_export_aria2_title">Export</string>
+    <string name="action_menu_export_aria2_success">Export aria2.conf to /SDCard/aria2.conf successful</string>
+    <string name="action_menu_export_aria2_fail">Export aria2.conf to /SDCard/aria2.conf error</string>
+
+    <string name="action_menu_import_aria2_title">Import</string>
+    <string name="action_menu_import_aria2_success">Import successful</string>
+    <string name="action_menu_import_aria2_fail">Import failed</string>
+    <string name="action_menu_import_aria2_missing">Not found aria2.conf on SDCard root dir</string>
+
+    <string name="action_menu_update_trackers_title">Update Trackers</string>
+    <string name="action_menu_update_trackers_message">Update trackers...please wait...</string>
+    <string name="action_menu_update_trackers_success">Update success</string>
+    <string name="action_menu_update_trackers_fail">Update failed</string>
+
+    <string name="unknow_error">oops! unknow error occured.</string>
+
 </resources>
