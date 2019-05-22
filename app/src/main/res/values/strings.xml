@@ -77,5 +77,6 @@
     <string name="action_menu_update_trackers_fail">Update failed</string>
 
     <string name="unknow_error">oops! unknow error occured.</string>
+    <string name="aria_updated">aria2 binary executeable file update successful.</string>
 
 </resources>

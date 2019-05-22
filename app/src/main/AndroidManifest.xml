@@ -24,7 +24,12 @@
         <meta-data
             android:name="BaiduMobAd_EXCEPTION_LOG"
             android:value="true" />
-
+        <meta-data
+            android:name="BaiduMobAd_SEND_STRATEGY"
+            android:value="APP_START" />
+        <meta-data
+            android:name="BaiduMobAd_ONLY_WIFI"
+            android:value="false" />
         <!--<activity-->
         <!--android:name=".MainActivity"-->
         <!--android:theme="@style/Theme.AppCompat.NoActionBar">-->

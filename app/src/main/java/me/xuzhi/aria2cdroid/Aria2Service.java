@@ -12,6 +12,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.FileIOUtils;
 
@@ -69,11 +70,22 @@ public class Aria2Service extends Service {
     public void onCreate() {
         super.onCreate();
         fileAria2c = new File(getFilesDir(), "aria2c");
-        if (!fileAria2c.exists()) {
+        sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "aria2 version:v1.34.0");
+        sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "app version:v" + BuildConfig.VERSION_NAME + "(" + BuildConfig.BUILD_TYPE + ")");
+
+        boolean exist = fileAria2c.exists() && (fileAria2c.length() == 4349452);
+
+        if (!exist) {
+            try {
+                fileAria2c.delete();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             try {
                 InputStream ins = getResources().openRawResource(R.raw.aria2c);
                 FileIOUtils.writeFileFromIS(fileAria2c, ins);
                 Runtime.getRuntime().exec("chmod 777 " + fileAria2c.getAbsolutePath());
+                sendMessage(ARIA2_SERVICE_BIN_CONSOLE, getString(R.string.aria_updated));
             } catch (Exception e) {
                 Log.e(TAG, "onCreate: ", e);
             }
