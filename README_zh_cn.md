@@ -2,6 +2,8 @@
 
 ![](https://travis-ci.org/yahch/aria2c-android-app.svg?branch=master) ![](https://img.shields.io/github/forks/yahch/aria2c-android-app.svg) ![](https://img.shields.io/github/stars/yahch/aria2c-android-app.svg) ![](https://img.shields.io/github/license/yahch/aria2c-android-app.svg)
 
+[ENGLISH](README.md) | [中文](README_zh_cn.md)
+
 这是一个 aria2 在 android 上的版本，如果你不知道 aria2 是什么，请查看下面的网址：
 
 http://aria2.github.io/
