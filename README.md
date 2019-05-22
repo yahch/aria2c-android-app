@@ -16,7 +16,7 @@ The app is simple and only needs to be installed and ready to use after Google P
 </a>
 </div>
 
-On Google Play it costs $1.99. If you don't want to pay for the app, you can clone this source to build your own app. If you don't build an app, you can download the free version in the Coolan market and they work exactly the same.
+On Google Play it costs $1.99. If you don't want to pay for the app, you can clone this source to build your own app. If you don't build an app, you can download the free version in the Coolapk market and they work exactly the same.
 
 If you know the use of aria2 very well, then this app is very simple for you. You can find all the parameters you want to set in the advanced settings to optimize.
 
