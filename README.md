@@ -27,7 +27,7 @@ If you feel that this app is helpful to you, you can join in development, star m
 Here are some screenshots of the app for preview only.
 
 <div class="half" style="margin-top:20px;margin-bottom:20px">
-<img src="https://raw.githubusercontent.com/yahch/aria2c-android-app/master/screenshots/zh_01.png" height="500" />
+<img src="https://raw.githubusercontent.com/yahch/aria2c-android-app/master/screenshots/en_01.png" height="500" />
 &nbsp;&nbsp;
-<img src="https://raw.githubusercontent.com/yahch/aria2c-android-app/master/screenshots/zh_02.png" height="500" />
+<img src="https://raw.githubusercontent.com/yahch/aria2c-android-app/master/screenshots/en_02.png" height="500" />
 </div>
