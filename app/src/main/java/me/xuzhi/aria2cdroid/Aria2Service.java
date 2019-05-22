@@ -7,10 +7,13 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Map;
 
 /**
  * Created by xuzhi on 2018/3/12.
@@ -90,6 +94,46 @@ public class Aria2Service extends Service {
                 Log.e(TAG, "onCreate: ", e);
             }
         }
+
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("aria2app", MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        long lastUpdate = sharedPreferences.getLong("lastUpdate", 0);
+
+
+        if (System.currentTimeMillis() - lastUpdate > 43200000) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    TrackerUpdater tcu = new TrackerUpdater();
+                    tcu.update(getApplicationContext(), new TrackerUpdater.Callback() {
+                        @Override
+                        public void onComplete(String trackers) {
+                            try {
+                                Map<String, String> aria2config = Utils.readAria2Config(getApplicationContext());
+                                aria2config.put("bt-tracker", trackers);
+                                String confText = Utils.dumpAria2Config(aria2config);
+                                FileIOUtils.writeFileFromString(Utils.getConfigFile(getApplicationContext()), confText);
+                                sendMessage(ARIA2_SERVICE_BIN_CONSOLE, getString(R.string.update_tracker_success));
+                                editor.putLong("lastUpdate", System.currentTimeMillis());
+                                editor.commit();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+                    });
+
+                }
+            }, 5000);
+        } else {
+            Log.d(TAG, "may not update now");
+        }
+
     }
 
     @Override
