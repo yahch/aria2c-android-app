@@ -126,7 +126,7 @@ public class SourceFragment extends Fragment {
                 webView.loadUrl("javascript:document.getElementById('content-wrapper').setAttribute('style','padding-top:50px;min-height:683px;');");
             }
         });
-        webView.loadUrl("file:///android_asset/aria_ng/index.html");
+        webView.loadUrl("file:///android_asset/aria_ng/index.html#!/settings/rpc/set?protocol=http&host=127.0.0.1&port=6800&interface=jsonrpc&secret=MTIzNDU2");
         return vw;
     }
 
