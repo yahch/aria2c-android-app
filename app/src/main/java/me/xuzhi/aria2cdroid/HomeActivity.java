@@ -53,6 +53,7 @@ import me.xuzhi.aria2cdroid.views.AdvanceFragment;
 import me.xuzhi.aria2cdroid.views.LicenceFragment;
 import me.xuzhi.aria2cdroid.views.LogsFragment;
 import me.xuzhi.aria2cdroid.views.OnFragmentInteractionListener;
+import me.xuzhi.aria2cdroid.views.PrefsFragment;
 import me.xuzhi.aria2cdroid.views.ServFragment;
 import me.xuzhi.aria2cdroid.views.SourceFragment;
 
@@ -125,13 +126,14 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        fragments = new Fragment[4];
+        fragments = new Fragment[5];
         logsFragment = new LogsFragment();
         advanceFragment = new AdvanceFragment();
         fragments[0] = logsFragment;
         fragments[1] = advanceFragment;
         fragments[2] = new SourceFragment();
         fragments[3] = new LicenceFragment();
+        fragments[4] = new PrefsFragment();
 
         Rigger.getRigger(this).addFragment(R.id.mainFragment, fragments);
 
@@ -417,6 +419,17 @@ public class HomeActivity extends AppCompatActivity
                     getSupportActionBar().setTitle(getString(R.string.app_menu_rate));
                     fab.setVisibility(View.INVISIBLE);
                     Rigger.getRigger(this).showFragment(Rigger.getRigger(fragments[3]).getFragmentTAG());
+                    updateActionbarMenuState(false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.nav_prefs:
+                try {
+                    fabMode = 4;
+                    getSupportActionBar().setTitle(getString(R.string.string_prefs));
+                    fab.setVisibility(View.INVISIBLE);
+                    Rigger.getRigger(this).showFragment(Rigger.getRigger(fragments[4]).getFragmentTAG());
                     updateActionbarMenuState(false);
                 } catch (Exception e) {
                     e.printStackTrace();

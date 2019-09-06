@@ -78,5 +78,6 @@
 
     <string name="unknow_error">oops! unknow error occured.</string>
     <string name="aria_updated">aria2 binary executeable file update successful.</string>
+    <string name="string_prefs">Preference</string>
 
 </resources>
