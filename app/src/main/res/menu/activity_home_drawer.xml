@@ -10,7 +10,7 @@
             android:title="@string/app_menu_logs" />
         <item
             android:id="@+id/nav_prefs"
-            android:icon="@drawable/ic_services"
+            android:icon="@drawable/ic_pref"
             android:title="@string/string_prefs" />
         <item
             android:id="@+id/nav_advance"

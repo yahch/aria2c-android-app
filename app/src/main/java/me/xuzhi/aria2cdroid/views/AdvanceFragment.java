@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.CacheDiskUtils;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.io.CharStreams;
@@ -50,6 +51,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import me.xuzhi.aria2cdroid.MainActivity;
 import me.xuzhi.aria2cdroid.R;
+import me.xuzhi.aria2cdroid.Storager;
 import me.xuzhi.aria2cdroid.Utils;
 
 
@@ -226,6 +228,12 @@ public class AdvanceFragment extends Fragment {
 
         clearAllNodes();
 
+        byte[] prefsSwitch = CacheDiskUtils.getInstance().getBytes("sp_config_switch_state");
+        boolean useSDcard = false;
+        if (prefsSwitch != null && prefsSwitch.length >= 3) {
+            useSDcard = (prefsSwitch[2] == 0x01);
+        }
+
         LinearLayout view = viewLayout.findViewById(R.id.configsLayout);
         int textColor = Color.parseColor("#2B2B2B");
 
@@ -248,6 +256,12 @@ public class AdvanceFragment extends Fragment {
             checkBox.setTextColor(textColor);
             tv.setTextColor(textColor);
             editText.setTextColor(textColor);
+
+            if (useSDcard && paraKey.equals("dir")) {
+                checkBox.setEnabled(false);
+                editText.setEnabled(false);
+                editText.setText(Storager.getSecondaryStoragePath(getContext()));
+            }
 
             linearLayout.addView(checkBox);
             linearLayout.addView(tv);

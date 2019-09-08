@@ -17,6 +17,7 @@ import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.FileIOUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -99,8 +100,17 @@ public class Aria2Service extends Service {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         long lastUpdate = sharedPreferences.getLong("lastUpdate", 0);
 
+        byte[] prefsSwitch = CacheDiskUtils.getInstance().getBytes("sp_config_switch_state");
+        boolean autoUpdate = true;
+        if (prefsSwitch != null && prefsSwitch.length > 0) {
+            autoUpdate = (prefsSwitch[0] == 0x01);
+        }
 
-        if (System.currentTimeMillis() - lastUpdate > 43200000) {
+        if (!autoUpdate) {
+            sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "自动更新Trackers服务未开启");
+        }
+
+        if (System.currentTimeMillis() - lastUpdate > 43200000 && autoUpdate) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

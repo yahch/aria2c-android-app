@@ -2,17 +2,21 @@ package me.xuzhi.aria2cdroid;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -88,7 +92,8 @@ public class HomeActivity extends AppCompatActivity
                     String ip = NetworkUtils.getIPAddress(true);
                     String port = aria2config.get("rpc-listen-port") + "";
                     String secret = aria2config.get("rpc-secret") + "";
-                    Utils.writeConsoleLog(logsFragment, 0, "ip:" + ip);
+                    Utils.writeConsoleLog(logsFragment, 0, "ip1:127.0.0.1");
+                    Utils.writeConsoleLog(logsFragment, 0, "ip2:" + ip);
                     Utils.writeConsoleLog(logsFragment, 0, "rpc-port:" + port);
                     Utils.writeConsoleLog(logsFragment, 0, "rpc-secret:" + secret);
                 } catch (Exception e) {
@@ -459,6 +464,9 @@ public class HomeActivity extends AppCompatActivity
                         .setAction(getString(R.string.app_string_advance_config), null).show();
                 Utils.writeConsoleLog(logsFragment, 0, getString(R.string.app_string_save_config_success));
             }
+        } else if (msg.what == PrefsFragment.BATTERY_OPT) {
+            boolean br = ignoreBatteryOptimization(this);
+            Toast.makeText(this, br + "", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -483,5 +491,21 @@ public class HomeActivity extends AppCompatActivity
                 break;
 
         }
+    }
+
+    private boolean ignoreBatteryOptimization(Activity activity) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//
+//            PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+//
+//            boolean hasIgnored = powerManager.isIgnoringBatteryOptimizations(activity.getPackageName());
+//            if (!hasIgnored) {
+//                Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+//                intent.setData(Uri.parse("package:" + activity.getPackageName()));
+//                startActivity(intent);
+//            }
+//            return hasIgnored;
+//        }
+        return true;
     }
 }
