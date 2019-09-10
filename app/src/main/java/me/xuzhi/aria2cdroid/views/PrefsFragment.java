@@ -18,10 +18,15 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.blankj.utilcode.util.CacheDiskUtils;
+import com.blankj.utilcode.util.FileIOUtils;
 import com.jkb.fragment.rigger.annotation.Puppet;
+
+import java.io.File;
+import java.util.Map;
 
 import me.xuzhi.aria2cdroid.R;
 import me.xuzhi.aria2cdroid.Storager;
+import me.xuzhi.aria2cdroid.Utils;
 
 import static android.content.Context.POWER_SERVICE;
 
@@ -68,6 +73,22 @@ public class PrefsFragment extends Fragment {
             brr[1] = ignoreBattery ? (byte) 0x01 : (byte) 0x00;
             brr[2] = useSdcard ? (byte) 0x01 : (byte) 0x00;
             CacheDiskUtils.getInstance().put("sp_config_switch_state", brr);
+            if (useSdcard) {
+                try {
+                    String sdRoot = Storager.getSecondaryStoragePath(getContext());
+                    if (!TextUtils.isEmpty(sdRoot)) {
+                        File sdpath = new File(sdRoot, "download");
+                        if (!sdpath.exists()) sdpath.mkdir();
+                        Map<String, String> srcCfg = Utils.readAria2Config(getContext());
+                        srcCfg.put("dir", sdpath.getAbsolutePath());
+                        String conf = Utils.dumpAria2Config(srcCfg);
+                        File fileConf = Utils.getConfigFile(getContext());
+                        FileIOUtils.writeFileFromString(fileConf, conf);
+                    }
+                } catch (Exception e) {
+                   
+                }
+            }
         }
     };
 

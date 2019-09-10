@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyboardShortcutGroup;
@@ -30,6 +31,7 @@ import com.google.common.io.Files;
 import com.jkb.fragment.rigger.annotation.LazyLoad;
 import com.jkb.fragment.rigger.annotation.Puppet;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -258,9 +260,18 @@ public class AdvanceFragment extends Fragment {
             editText.setTextColor(textColor);
 
             if (useSDcard && paraKey.equals("dir")) {
-                checkBox.setEnabled(false);
-                editText.setEnabled(false);
-                editText.setText(Storager.getSecondaryStoragePath(getContext()));
+                try {
+                    String sdRoot = Storager.getSecondaryStoragePath(getContext());
+                    if (!TextUtils.isEmpty(sdRoot)) {
+                        File sdpath = new File(sdRoot, "download");
+                        if (!sdpath.exists()) sdpath.mkdir();
+                        editText.setText(sdpath.getAbsolutePath());
+                        checkBox.setEnabled(false);
+                        editText.setEnabled(false);
+                    }
+                } catch (Exception e) {
+
+                }
             }
 
             linearLayout.addView(checkBox);
