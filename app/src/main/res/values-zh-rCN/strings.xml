@@ -69,5 +69,8 @@
     <string name="unknow_error">发生一个小错误.</string>
     <string name="aria_updated">aria2二进制文件已经更新.</string>
     <string name="string_prefs">首选项</string>
+    <string name="string_autoupdate_trackers">自动更新Trackers</string>
+    <string name="string_use_tf_card">使用外置存储卡</string>
+    <string name="string_ignore_battery">忽略电池优化</string>
 
 </resources>

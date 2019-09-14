@@ -79,5 +79,8 @@
     <string name="unknow_error">oops! unknow error occured.</string>
     <string name="aria_updated">aria2 binary executeable file update successful.</string>
     <string name="string_prefs">Preference</string>
+    <string name="string_autoupdate_trackers">Auto update trackers</string>
+    <string name="string_use_tf_card">Use TF card or OTG</string>
+    <string name="string_ignore_battery">Ignore battery optimization</string>
 
 </resources>

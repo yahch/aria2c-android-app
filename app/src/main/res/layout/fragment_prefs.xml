@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="自动更新Trackers" />
+                    android:text="@string/string_autoupdate_trackers" />
 
                 <Switch
                     android:id="@+id/swAutoUpdateTrackers"
@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="使用外置存储卡" />
+                    android:text="@string/string_use_tf_card" />
 
                 <Switch
                     android:id="@+id/swUseSDcard"
@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="忽略电池优化" />
+                    android:text="@string/string_ignore_battery" />
 
                 <Switch
                     android:id="@+id/swIgnoreBattery"
