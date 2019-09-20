@@ -32,9 +32,9 @@
     <string name="no_aria2_client">未在你手机上发现Aria2App客户端程序，将带你去应用商店下载</string>
     <string name="app_menu_service">服务</string>
     <string name="app_menu_logs">服务</string>
-    <string name="app_menu_advance">配置</string>
+    <string name="app_menu_advance">参数配置</string>
     <string name="app_menu_rate">许可</string>
-    <string name="app_menu_source">管理器</string>
+    <string name="app_menu_source">下载管理</string>
     <string name="app_menu_more">更多</string>
     <string name="app_string_save_config_success">保存成功</string>
     <string name="app_string_advance_config">配置</string>

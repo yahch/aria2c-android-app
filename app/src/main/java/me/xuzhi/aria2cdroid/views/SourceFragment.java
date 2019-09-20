@@ -124,6 +124,7 @@ public class SourceFragment extends Fragment {
                 super.onPageFinished(view, url);
                 webView.loadUrl("javascript:document.getElementsByClassName('logo')[0].remove();");
                 webView.loadUrl("javascript:document.getElementById('content-wrapper').setAttribute('style','padding-top:50px;min-height:683px;');");
+                webView.loadUrl("javascript:document.querySelector('body > div.wrapper.ng-scope > header > nav > div.navbar-toolbar > ul > li:nth-child(10) > a').remove();");
             }
         });
         webView.loadUrl("file:///android_asset/aria_ng/index.html#!/settings/rpc/set?protocol=http&host=127.0.0.1&port=6800&interface=jsonrpc&secret=MTIzNDU2");

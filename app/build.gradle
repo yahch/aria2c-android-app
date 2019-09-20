@@ -7,8 +7,8 @@ android {
         applicationId "me.xuzhi.aria2cdroid"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 190914
-        versionName "1.17"
+        versionCode 190920
+        versionName "2.01"
     }
     buildTypes {
         release {
