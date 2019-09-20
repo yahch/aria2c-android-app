@@ -43,10 +43,10 @@
     <string name="app_string_licence">开源组件许可</string>
     <string name="app_string_service_running">Aria2c服务后台运行中</string>
     <string name="app_string_get_config_more">获取更多详细说明信息:https://aria2.github.io/manual/en/html/aria2c.html#options</string>
-    <string name="app_string_my_source">•此APP为基于BSD的开放源代码软件</string>
-    <string name="app_string_what_module_used">•以下为使用到的第三方模块和程序代码</string>
-    <string name="app_string_project_url">•BUG反馈:https://estermont.wordpress.com/aria2android-server/</string>
-    <string name="app_string_project_thanks">感谢我的可爱猫咪 Sounion (≧▽≦*)</string>
+    <string name="app_string_my_source">此APP为基于BSD的开放源代码软件</string>
+    <string name="app_string_what_module_used">以下为使用到的第三方模块和程序代码</string>
+    <string name="app_string_project_url">Bug建议:xyq@dr.com</string>
+    <string name="app_string_project_thanks">感谢我的可爱小宝贝 Sounion (≧▽≦*)</string>
 
     <string name="action_menu_update_trackers">更新 trackers</string>
     <string name="action_menu_import_aria2">导入 aria2.conf</string>

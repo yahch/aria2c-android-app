@@ -32,8 +32,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/app_string_my_source"
                 android:textColor="@color/colorPrimaryDark"
+                android:textIsSelectable="true"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_string_project_thanks"
+                android:textColor="#676767"
                 android:textIsSelectable="true" />
 
             <TextView
@@ -53,10 +63,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="@string/app_string_what_module_used"
-                android:textColor="#676767"
-                android:textIsSelectable="true" />
+                android:textColor="@color/colorPrimaryDark"
+                android:textIsSelectable="true"
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -313,18 +325,6 @@
                 android:tag="rxjava"
                 android:text="https://github.com/ReactiveX/RxJava/blob/2.x/LICENSE"
                 android:textColor="#676767"
-                android:textIsSelectable="true"
-                android:textSize="12sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center_horizontal"
-                android:tag="rxjava"
-                android:text="@string/app_string_project_thanks"
-                android:textColor="#129BDE"
                 android:textIsSelectable="true"
                 android:textSize="12sp" />
 
