@@ -72,5 +72,6 @@
     <string name="string_autoupdate_trackers">自动更新Trackers</string>
     <string name="string_use_tf_card">使用外置存储卡</string>
     <string name="string_ignore_battery">忽略电池优化</string>
+    <string name="string_auto_update_trackers_off">自动更新Trackers服务未开启</string>
 
 </resources>

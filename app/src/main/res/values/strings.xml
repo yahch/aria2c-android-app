@@ -82,5 +82,6 @@
     <string name="string_autoupdate_trackers">Auto update trackers</string>
     <string name="string_use_tf_card">Use TF card or OTG</string>
     <string name="string_ignore_battery">Ignore battery optimization</string>
+    <string name="string_auto_update_trackers_off">trackers auto update is disabled</string>
 
 </resources>

@@ -86,6 +86,8 @@ public class BinExecuter {
                     String line;
                     try {
                         while ((line = brout.readLine()) != null) {
+                            line = line.trim();
+                            if(line.startsWith("[")) continue;
                             Message message = new Message();
                             message.what = 1;
                             Bundle bundle = new Bundle();

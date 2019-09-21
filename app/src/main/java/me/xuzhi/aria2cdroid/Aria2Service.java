@@ -78,6 +78,15 @@ public class Aria2Service extends Service {
         sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "aria2 version:v1.34.0");
         sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "app version:v" + BuildConfig.VERSION_NAME + "(" + BuildConfig.BUILD_TYPE + ")");
 
+        try {
+            File sessionFile = new File(getFilesDir(), "aria2.session");
+            if (!sessionFile.exists()) {
+                sessionFile.createNewFile();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         boolean exist = fileAria2c.exists() && (fileAria2c.length() == 4349452);
 
         if (!exist) {
@@ -107,7 +116,7 @@ public class Aria2Service extends Service {
         }
 
         if (!autoUpdate) {
-            sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "自动更新Trackers服务未开启");
+            sendMessage(ARIA2_SERVICE_BIN_CONSOLE, getString(R.string.string_auto_update_trackers_off));
         }
 
         if (System.currentTimeMillis() - lastUpdate > 43200000 && autoUpdate) {
