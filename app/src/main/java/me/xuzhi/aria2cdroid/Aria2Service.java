@@ -76,7 +76,7 @@ public class Aria2Service extends Service {
         super.onCreate();
         fileAria2c = new File(getFilesDir(), "aria2c");
         sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "aria2 version:v1.34.0");
-        sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "app version:v" + BuildConfig.VERSION_NAME + "(" + BuildConfig.BUILD_TYPE + ")");
+        sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "app version:v" + BuildConfig.VERSION_NAME);
 
         try {
             File sessionFile = new File(getFilesDir(), "aria2.session");

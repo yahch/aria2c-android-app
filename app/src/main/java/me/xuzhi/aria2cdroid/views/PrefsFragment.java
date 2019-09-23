@@ -4,6 +4,7 @@ package me.xuzhi.aria2cdroid.views;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
@@ -86,7 +87,22 @@ public class PrefsFragment extends Fragment {
                         FileIOUtils.writeFileFromString(fileConf, conf);
                     }
                 } catch (Exception e) {
-                   
+
+                }
+            }
+            if (ignoreBattery) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    try {
+                        PowerManager powerManager = (PowerManager) getActivity().getSystemService(POWER_SERVICE);
+                        boolean hasIgnored = powerManager.isIgnoringBatteryOptimizations(getActivity().getPackageName());
+                        if (!hasIgnored) {
+                            Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                            intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
+                            startActivity(intent);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

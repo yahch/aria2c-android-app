@@ -31,7 +31,7 @@
     <string name="open_aria2_client">打开Aria2客户端</string>
     <string name="no_aria2_client">未在你手机上发现Aria2App客户端程序，将带你去应用商店下载</string>
     <string name="app_menu_service">服务</string>
-    <string name="app_menu_logs">服务</string>
+    <string name="app_menu_logs">服务状态</string>
     <string name="app_menu_advance">参数配置</string>
     <string name="app_menu_rate">许可</string>
     <string name="app_menu_source">下载管理</string>
@@ -46,7 +46,7 @@
     <string name="app_string_my_source">此APP为基于BSD的开放源代码软件</string>
     <string name="app_string_what_module_used">以下为使用到的第三方模块和程序代码</string>
     <string name="app_string_project_url">Bug建议:xyq@dr.com</string>
-    <string name="app_string_project_thanks">感谢我的可爱小宝贝 Sounion (≧▽≦*)</string>
+    <string name="app_string_project_thanks">感谢我的可爱小宝贝 Sounion</string>
 
     <string name="action_menu_update_trackers">更新 trackers</string>
     <string name="action_menu_import_aria2">导入 aria2.conf</string>

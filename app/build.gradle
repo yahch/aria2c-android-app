@@ -7,8 +7,8 @@ android {
         applicationId "me.xuzhi.aria2cdroid"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 190921
-        versionName "2.02"
+        versionCode 190923
+        versionName "2.03"
     }
     buildTypes {
         release {
@@ -32,5 +32,7 @@ dependencies {
     implementation 'com.justkiddingbaby:fragment-rigger:1.4.4'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
+    implementation 'com.android.support:cardview-v7:28.0.0'
     implementation files('libs/Baidu_Mtj_android_3.9.3.9.jar')
+
 }
