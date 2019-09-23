@@ -3,6 +3,7 @@ package me.xuzhi.aria2cdroid;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.baidu.mobstat.StatService;
 import com.blankj.utilcode.util.FileIOUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -28,6 +29,7 @@ public class TrackerUpdater {
                 @Override
                 public void onSuccess(int i, Header[] headers, byte[] bytes) {
                     try {
+                        StatService.onEvent(context, "UPDATE_TRACKERS", "", 1);
                         String result = new String(bytes);
                         File trackers = new File(context.getCacheDir(), "trackers.txt");
                         FileIOUtils.writeFileFromString(trackers, result);
