@@ -324,12 +324,7 @@ public class HomeActivity extends AppCompatActivity
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-        String trackersUrl = CacheDiskUtils.getInstance().getString("trackers_url");
-        if (TextUtils.isEmpty(trackersUrl)) {
-            trackersUrl = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt";
-        }
-
-        TrackerUpdater tcu = new TrackerUpdater(trackersUrl);
+        TrackerUpdater tcu = new TrackerUpdater(getApplicationContext());
         tcu.update(getApplicationContext(), new TrackerUpdater.Callback() {
             @Override
             public void onComplete(String trackers) {

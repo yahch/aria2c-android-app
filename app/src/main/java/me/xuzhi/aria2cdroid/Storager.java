@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 
 import static android.content.Context.STORAGE_SERVICE;
 
+@SuppressWarnings("JavaReflectionMemberAccess")
 public class Storager {
 
     private static final String TAG = "Storager";

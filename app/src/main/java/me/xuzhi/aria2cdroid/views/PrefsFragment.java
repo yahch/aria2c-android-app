@@ -3,11 +3,9 @@ package me.xuzhi.aria2cdroid.views;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Message;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
@@ -29,7 +27,6 @@ import com.jkb.fragment.rigger.annotation.Puppet;
 import java.io.File;
 import java.util.Map;
 
-import me.xuzhi.aria2cdroid.ACache;
 import me.xuzhi.aria2cdroid.R;
 import me.xuzhi.aria2cdroid.Storager;
 import me.xuzhi.aria2cdroid.Utils;
@@ -74,8 +71,7 @@ public class PrefsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    ACache.get(getContext()).put("trackers_url", "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt");
-                    ACache.get(getContext()).put("trackers_type", (byte) 0x01);
+                    CacheDiskUtils.getInstance().put("trackers_type", new byte[]{(byte) 0x01});
                     editTrackersUrl.setVisibility(View.GONE);
                     btnSaveTrackers.setVisibility(View.GONE);
                 }
@@ -86,8 +82,7 @@ public class PrefsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    ACache.get(getContext()).put("trackers_url", "https://gitee.com/OR120/BT-trackers/raw/master/trackers.txt");
-                    ACache.get(getContext()).put("trackers_type", (byte) 0x02);
+                    CacheDiskUtils.getInstance().put("trackers_type", new byte[]{(byte) 0x02});
                     editTrackersUrl.setVisibility(View.GONE);
                     btnSaveTrackers.setVisibility(View.GONE);
                 }
@@ -98,7 +93,7 @@ public class PrefsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    ACache.get(getContext()).put("trackers_type", (byte) 0x03);
+                    CacheDiskUtils.getInstance().put("trackers_type", new byte[]{(byte) 0x03});
                     editTrackersUrl.setVisibility(View.VISIBLE);
                     btnSaveTrackers.setVisibility(View.VISIBLE);
                 }
@@ -106,7 +101,7 @@ public class PrefsFragment extends Fragment {
         });
 
         editTrackersUrl = vw.findViewById(R.id.edtTrackersUrl);
-        String trackersUrl = ACache.get(getContext()).getAsString("trackers_url_cust");
+        String trackersUrl = CacheDiskUtils.getInstance().getString("trackers_url_cust");
         if (TextUtils.isEmpty(trackersUrl)) {
             editTrackersUrl.setText("https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt");
         } else {
@@ -134,7 +129,7 @@ public class PrefsFragment extends Fragment {
             validate = true;
         }
         if (validate) {
-            ACache.get(getContext()).put("trackers_url_cust", trackersUrl);
+            CacheDiskUtils.getInstance().put("trackers_url_cust", trackersUrl);
             Toast.makeText(getContext(), getString(R.string.string_trackers_url_saved), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getContext(), getString(R.string.string_error_trackers_url), Toast.LENGTH_SHORT).show();
@@ -148,7 +143,7 @@ public class PrefsFragment extends Fragment {
             boolean ignoreBattery = swIgnoreBattery.isChecked();
             boolean useSdcard = swUseSdcard.isChecked();
 
-            ACache.get(getContext()).put("checkbox_status", new byte[]{autoUpdateTrackers ? (byte) 0x01 : (byte) 0x00
+            CacheDiskUtils.getInstance().put("checkbox_status", new byte[]{autoUpdateTrackers ? (byte) 0x01 : (byte) 0x00
                     , ignoreBattery ? (byte) 0x01 : (byte) 0x00, useSdcard ? (byte) 0x01 : (byte) 0x00});
 
             if (useSdcard) {
@@ -209,7 +204,7 @@ public class PrefsFragment extends Fragment {
         }
 
         try {
-            byte[] trackrtsType = ACache.get(getContext()).getAsBinary("trackers_type");
+            byte[] trackrtsType = CacheDiskUtils.getInstance().getBytes("trackers_type");
             if (trackrtsType[0] == 0x01) {
                 rdoSource1.setChecked(true);
             } else if (trackrtsType[0] == 0x02) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.baidu.mobstat.StatService;
+import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.FileIOUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -19,16 +20,36 @@ public class TrackerUpdater {
         void onComplete(String trackers);
 
         void onError(Throwable e);
+
+        void onReport(String message);
     }
 
+    private Context mContext;
     private String mUrl;
 
-    public TrackerUpdater(String mUrl) {
-        this.mUrl = mUrl;
+    public TrackerUpdater(Context context) {
+        this.mContext = context;
+        try {
+            byte[] trackersType = CacheDiskUtils.getInstance().getBytes("trackers_type");
+            if (trackersType[0] == 0x01) {
+                mUrl = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt";
+            } else if (trackersType[0] == 0x02) {
+                mUrl = "https://gitee.com/OR120/BT-trackers/raw/master/trackers.txt";
+            } else if (trackersType[1] == 0x03) {
+                mUrl = CacheDiskUtils.getInstance().getString("trackers_url_cust");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            mUrl = null;
+        }
+        if (mUrl == null || !mUrl.startsWith("http://") || !mUrl.startsWith("https://") || !mUrl.startsWith("ftp://")) {
+            mUrl = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt";
+        }
     }
 
     public void update(final Context context, final Callback callback) {
         String url = mUrl;
+        callback.onReport(mUrl);
         AsyncHttpClient client = new AsyncHttpClient();
         try {
             client.get(url, new AsyncHttpResponseHandler() {

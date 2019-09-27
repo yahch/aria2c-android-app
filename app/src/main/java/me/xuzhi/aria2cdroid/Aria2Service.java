@@ -126,11 +126,7 @@ public class Aria2Service extends Service {
                 @Override
                 public void run() {
 
-                    String trackersUrl = ACache.get(getApplicationContext()).getAsString("trackers_url");
-                    if (TextUtils.isEmpty(trackersUrl)) {
-                        trackersUrl = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt";
-                    }
-                    TrackerUpdater tcu = new TrackerUpdater(trackersUrl);
+                    TrackerUpdater tcu = new TrackerUpdater(getApplicationContext());
                     tcu.update(getApplicationContext(), new TrackerUpdater.Callback() {
                         @Override
                         public void onComplete(String trackers) {
@@ -150,6 +146,11 @@ public class Aria2Service extends Service {
                         @Override
                         public void onError(Throwable e) {
 
+                        }
+
+                        @Override
+                        public void onReport(String message) {
+                            
                         }
                     });
 
