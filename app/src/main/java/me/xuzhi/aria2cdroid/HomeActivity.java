@@ -23,6 +23,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -37,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mobstat.StatService;
+import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.FileIOUtils;
 import com.blankj.utilcode.util.NetworkUtils;
 import com.google.common.base.Strings;
@@ -322,7 +324,12 @@ public class HomeActivity extends AppCompatActivity
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-        TrackerUpdater tcu = new TrackerUpdater();
+        String trackersUrl = CacheDiskUtils.getInstance().getString("trackers_url");
+        if (TextUtils.isEmpty(trackersUrl)) {
+            trackersUrl = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt";
+        }
+
+        TrackerUpdater tcu = new TrackerUpdater(trackersUrl);
         tcu.update(getApplicationContext(), new TrackerUpdater.Callback() {
             @Override
             public void onComplete(String trackers) {
@@ -426,6 +433,7 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_rate:
                 try {
                     fabMode = 3;
+                    StatService.onEvent(getApplicationContext(), "OPEN_ABOUT", "", 1);
                     getSupportActionBar().setTitle(getString(R.string.app_menu_rate));
                     fab.setVisibility(View.INVISIBLE);
                     Rigger.getRigger(this).showFragment(Rigger.getRigger(fragments[3]).getFragmentTAG());

@@ -73,5 +73,11 @@
     <string name="string_use_tf_card">使用外置存储卡</string>
     <string name="string_ignore_battery">忽略电池优化</string>
     <string name="string_auto_update_trackers_off">自动更新Trackers服务未开启</string>
+    <string name="save">保存</string>
+    <string name="string_error_trackers_url">Trackers 路径是 url，你填写的不符合要求。</string>
+    <string name="string_trackers_subscription_url">Trackers 订阅地址:</string>
+    <string name="string_trackers_url_saved">Trackers 订阅已保存</string>
+    <string name="string_trackers_sub">Trackers 订阅</string>
+    <string name="string_customer_url">自定义</string>
 
 </resources>

@@ -15,8 +15,12 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.FileIOUtils;
@@ -25,6 +29,7 @@ import com.jkb.fragment.rigger.annotation.Puppet;
 import java.io.File;
 import java.util.Map;
 
+import me.xuzhi.aria2cdroid.ACache;
 import me.xuzhi.aria2cdroid.R;
 import me.xuzhi.aria2cdroid.Storager;
 import me.xuzhi.aria2cdroid.Utils;
@@ -39,6 +44,9 @@ public class PrefsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private Switch swAutoUpdateTrackers, swUseSdcard, swIgnoreBattery;
+    private EditText editTrackersUrl;
+    private Button btnSaveTrackers;
+    private RadioButton rdoSource1, rdoSource2, rdoSourceCust;
 
     public PrefsFragment() {
         // Required empty public constructor
@@ -58,9 +66,79 @@ public class PrefsFragment extends Fragment {
         swIgnoreBattery.setOnCheckedChangeListener(onCheckedChangeListener);
         swUseSdcard.setOnCheckedChangeListener(onCheckedChangeListener);
 
+        rdoSource1 = vw.findViewById(R.id.rdoSource1);
+        rdoSource2 = vw.findViewById(R.id.rdoSource2);
+        rdoSourceCust = vw.findViewById(R.id.rdoSourceCust);
+
+        rdoSource1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    ACache.get(getContext()).put("trackers_url", "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt");
+                    ACache.get(getContext()).put("trackers_type", (byte) 0x01);
+                    editTrackersUrl.setVisibility(View.GONE);
+                    btnSaveTrackers.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        rdoSource2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    ACache.get(getContext()).put("trackers_url", "https://gitee.com/OR120/BT-trackers/raw/master/trackers.txt");
+                    ACache.get(getContext()).put("trackers_type", (byte) 0x02);
+                    editTrackersUrl.setVisibility(View.GONE);
+                    btnSaveTrackers.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        rdoSourceCust.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    ACache.get(getContext()).put("trackers_type", (byte) 0x03);
+                    editTrackersUrl.setVisibility(View.VISIBLE);
+                    btnSaveTrackers.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        editTrackersUrl = vw.findViewById(R.id.edtTrackersUrl);
+        String trackersUrl = ACache.get(getContext()).getAsString("trackers_url_cust");
+        if (TextUtils.isEmpty(trackersUrl)) {
+            editTrackersUrl.setText("https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt");
+        } else {
+            editTrackersUrl.setText(trackersUrl);
+        }
+
+        btnSaveTrackers = vw.findViewById(R.id.btnSaveTrackersUrl);
+        btnSaveTrackers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveTrackersUrl();
+            }
+        });
+
         loadConfig();
 
         return vw;
+    }
+
+    private void saveTrackersUrl() {
+        String trackersUrl = editTrackersUrl.getText().toString();
+        boolean validate = false;
+        if ((trackersUrl.startsWith("http://") || trackersUrl.startsWith("https://") ||
+                trackersUrl.startsWith("ftp://")) && trackersUrl.endsWith(".txt")) {
+            validate = true;
+        }
+        if (validate) {
+            ACache.get(getContext()).put("trackers_url_cust", trackersUrl);
+            Toast.makeText(getContext(), getString(R.string.string_trackers_url_saved), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), getString(R.string.string_error_trackers_url), Toast.LENGTH_SHORT).show();
+        }
     }
 
     CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
@@ -69,11 +147,10 @@ public class PrefsFragment extends Fragment {
             boolean autoUpdateTrackers = swAutoUpdateTrackers.isChecked();
             boolean ignoreBattery = swIgnoreBattery.isChecked();
             boolean useSdcard = swUseSdcard.isChecked();
-            byte[] brr = new byte[]{0x00, 0x00, 0x00};
-            brr[0] = autoUpdateTrackers ? (byte) 0x01 : (byte) 0x00;
-            brr[1] = ignoreBattery ? (byte) 0x01 : (byte) 0x00;
-            brr[2] = useSdcard ? (byte) 0x01 : (byte) 0x00;
-            CacheDiskUtils.getInstance().put("sp_config_switch_state", brr);
+
+            ACache.get(getContext()).put("checkbox_status", new byte[]{autoUpdateTrackers ? (byte) 0x01 : (byte) 0x00
+                    , ignoreBattery ? (byte) 0x01 : (byte) 0x00, useSdcard ? (byte) 0x01 : (byte) 0x00});
+
             if (useSdcard) {
                 try {
                     String sdRoot = Storager.getSecondaryStoragePath(getContext());
@@ -116,7 +193,7 @@ public class PrefsFragment extends Fragment {
             swIgnoreBattery.setChecked(hasIgnored);
         }
 
-        byte[] brr = CacheDiskUtils.getInstance().getBytes("sp_config_switch_state");
+        byte[] brr = CacheDiskUtils.getInstance().getBytes("checkbox_status");
         if (brr == null || brr.length != 3) {
             swAutoUpdateTrackers.setChecked(true);
             swUseSdcard.setChecked(false);
@@ -129,6 +206,19 @@ public class PrefsFragment extends Fragment {
         if (TextUtils.isEmpty(sdPath)) {
             swUseSdcard.setEnabled(false);
             swUseSdcard.setChecked(false);
+        }
+
+        try {
+            byte[] trackrtsType = ACache.get(getContext()).getAsBinary("trackers_type");
+            if (trackrtsType[0] == 0x01) {
+                rdoSource1.setChecked(true);
+            } else if (trackrtsType[0] == 0x02) {
+                rdoSource2.setChecked(true);
+            } else if (trackrtsType[0] == 0x03) {
+                rdoSourceCust.setChecked(true);
+            }
+        } catch (Exception e) {
+            rdoSource1.setChecked(true);
         }
     }
 

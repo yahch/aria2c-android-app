@@ -83,5 +83,11 @@
     <string name="string_use_tf_card">Use TF card or OTG</string>
     <string name="string_ignore_battery">Ignore battery optimization</string>
     <string name="string_auto_update_trackers_off">trackers auto update is disabled</string>
+    <string name="save">Save</string>
+    <string name="string_error_trackers_url">Trackers url not correct.</string>
+    <string name="string_trackers_subscription_url">Trackers subscription url:</string>
+    <string name="string_trackers_url_saved">Trackers subscription url save successful</string>
+    <string name="string_trackers_sub">Trackers subscription</string>
+    <string name="string_customer_url">customize</string>
 
 </resources>

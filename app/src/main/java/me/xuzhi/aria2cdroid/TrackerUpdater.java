@@ -21,8 +21,14 @@ public class TrackerUpdater {
         void onError(Throwable e);
     }
 
+    private String mUrl;
+
+    public TrackerUpdater(String mUrl) {
+        this.mUrl = mUrl;
+    }
+
     public void update(final Context context, final Callback callback) {
-        String url = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt";
+        String url = mUrl;
         AsyncHttpClient client = new AsyncHttpClient();
         try {
             client.get(url, new AsyncHttpResponseHandler() {

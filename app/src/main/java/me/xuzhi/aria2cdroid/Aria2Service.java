@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -125,7 +126,11 @@ public class Aria2Service extends Service {
                 @Override
                 public void run() {
 
-                    TrackerUpdater tcu = new TrackerUpdater();
+                    String trackersUrl = ACache.get(getApplicationContext()).getAsString("trackers_url");
+                    if (TextUtils.isEmpty(trackersUrl)) {
+                        trackersUrl = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt";
+                    }
+                    TrackerUpdater tcu = new TrackerUpdater(trackersUrl);
                     tcu.update(getApplicationContext(), new TrackerUpdater.Callback() {
                         @Override
                         public void onComplete(String trackers) {
