@@ -121,7 +121,8 @@ public class Aria2Service extends Service {
             sendMessage(ARIA2_SERVICE_BIN_CONSOLE, getString(R.string.string_auto_update_trackers_off));
         }
 
-        if (System.currentTimeMillis() - lastUpdate > 43200000 && autoUpdate) {
+        boolean expired = (System.currentTimeMillis() - lastUpdate > 43200000);
+        if (autoUpdate) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -150,7 +151,7 @@ public class Aria2Service extends Service {
 
                         @Override
                         public void onReport(String message) {
-                            
+
                         }
                     });
 

@@ -1,6 +1,7 @@
 package me.xuzhi.aria2cdroid;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.baidu.mobstat.StatService;
@@ -30,19 +31,21 @@ public class TrackerUpdater {
     public TrackerUpdater(Context context) {
         this.mContext = context;
         try {
-            byte[] trackersType = CacheDiskUtils.getInstance().getBytes("trackers_type");
-            if (trackersType[0] == 0x01) {
+            SharedPreferences sp = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+            int trackersType = sp.getInt("trackers_type", 0);
+            //byte[] trackersType = CacheDiskUtils.getInstance().getBytes("trackers_type");
+            if (trackersType == 0x01) {
                 mUrl = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt";
-            } else if (trackersType[0] == 0x02) {
+            } else if (trackersType == 0x02) {
                 mUrl = "https://gitee.com/OR120/BT-trackers/raw/master/trackers.txt";
-            } else if (trackersType[1] == 0x03) {
+            } else if (trackersType == 0x30) {
                 mUrl = CacheDiskUtils.getInstance().getString("trackers_url_cust");
             }
         } catch (Exception e) {
             e.printStackTrace();
             mUrl = null;
         }
-        if (mUrl == null || !mUrl.startsWith("http://") || !mUrl.startsWith("https://") || !mUrl.startsWith("ftp://")) {
+        if (mUrl == null) {
             mUrl = "https://raw.githubusercontent.com/ngosang/trackerslist/master/trackers_all_ip.txt";
         }
     }
