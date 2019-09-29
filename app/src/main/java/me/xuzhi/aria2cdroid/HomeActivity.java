@@ -349,6 +349,11 @@ public class HomeActivity extends AppCompatActivity
                 Snackbar.make(fab, getString(R.string.action_menu_update_trackers_fail), Snackbar.LENGTH_LONG)
                         .setAction(getString(R.string.action_menu_update_trackers_title), null).show();
             }
+
+            @Override
+            public void onReport(String message) {
+
+            }
         });
 
     }

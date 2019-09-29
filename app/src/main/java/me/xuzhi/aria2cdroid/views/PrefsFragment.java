@@ -180,7 +180,16 @@ public class PrefsFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadConfig();
+    }
+
     void loadConfig() {
+
+        swAutoUpdateTrackers.setChecked(false);
+        swUseSdcard.setChecked(false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PowerManager powerManager = (PowerManager) getActivity().getSystemService(POWER_SERVICE);
@@ -190,8 +199,6 @@ public class PrefsFragment extends Fragment {
 
         byte[] brr = CacheDiskUtils.getInstance().getBytes("checkbox_status");
         if (brr == null || brr.length != 3) {
-            swAutoUpdateTrackers.setChecked(true);
-            swUseSdcard.setChecked(false);
             return;
         }
         swAutoUpdateTrackers.setChecked(brr[0] == 0x01);
