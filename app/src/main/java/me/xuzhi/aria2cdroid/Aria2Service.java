@@ -111,11 +111,8 @@ public class Aria2Service extends Service {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         long lastUpdate = sharedPreferences.getLong("lastUpdate", 0);
 
-        byte[] prefsSwitch = CacheDiskUtils.getInstance().getBytes("sp_config_switch_state");
-        boolean autoUpdate = true;
-        if (prefsSwitch != null && prefsSwitch.length > 0) {
-            autoUpdate = (prefsSwitch[0] == 0x01);
-        }
+        SharedPreferences sp = getApplicationContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        boolean autoUpdate = sp.getBoolean("autoUpdateTrackers", true);
 
         if (!autoUpdate) {
             sendMessage(ARIA2_SERVICE_BIN_CONSOLE, getString(R.string.string_auto_update_trackers_off));
@@ -146,7 +143,7 @@ public class Aria2Service extends Service {
 
                         @Override
                         public void onError(Throwable e) {
-
+                            sendMessage(ARIA2_SERVICE_BIN_CONSOLE, getString(R.string.update_tracker_fail));
                         }
 
                         @Override

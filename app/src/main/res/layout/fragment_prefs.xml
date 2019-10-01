@@ -131,14 +131,14 @@
                             android:id="@+id/rdoSource1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ngosang"
+                            android:text="ngosang(Github)"
                             android:textColor="#676767" />
 
                         <RadioButton
                             android:id="@+id/rdoSource2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="OR120"
+                            android:text="UC震惊部秘书(酷安网友)提供"
                             android:textColor="#676767" />
 
                         <RadioButton

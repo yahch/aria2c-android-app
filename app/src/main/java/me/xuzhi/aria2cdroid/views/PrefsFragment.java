@@ -121,6 +121,8 @@ public class PrefsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     changeTrackerType(1);
+                    showHideCustFields(View.INVISIBLE);
+
                 }
             }
         });
@@ -130,6 +132,7 @@ public class PrefsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     changeTrackerType(2);
+                    showHideCustFields(View.INVISIBLE);
                 }
             }
         });
@@ -139,6 +142,7 @@ public class PrefsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     changeTrackerType(30);
+                    showHideCustFields(View.VISIBLE);
                 }
             }
         });
@@ -161,6 +165,11 @@ public class PrefsFragment extends Fragment {
         loadConfig();
 
         return vw;
+    }
+
+    private void showHideCustFields(int status) {
+        editTrackersUrl.setVisibility(status);
+        btnSaveTrackers.setVisibility(status);
     }
 
     private void changeTrackerType(int type) {
@@ -204,7 +213,7 @@ public class PrefsFragment extends Fragment {
         }
 
         SharedPreferences sp = getContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        boolean autoUpdateTrackers = sp.getBoolean("autoUpdateTrackers", false);
+        boolean autoUpdateTrackers = sp.getBoolean("autoUpdateTrackers", true);
         boolean ignoreBattery = sp.getBoolean("ignoreBattery", false);
         boolean useSdcard = sp.getBoolean("useSdcard", false);
 
