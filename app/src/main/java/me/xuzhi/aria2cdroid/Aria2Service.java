@@ -18,7 +18,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.baidu.mobstat.StatService;
 import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.FileIOUtils;
 
@@ -175,7 +174,6 @@ public class Aria2Service extends Service {
     public void start() {
         if (binExecuter == null) return;
         binExecuter.start();
-        StatService.onEvent(getApplicationContext(), "START_SERVICE", "", 1);
         if (binExecuter.getPid() > 0) {
             sendMessage(ARIA2_SERVICE_START_SUCCESS, String.valueOf(binExecuter.getPid()));
             running = true;

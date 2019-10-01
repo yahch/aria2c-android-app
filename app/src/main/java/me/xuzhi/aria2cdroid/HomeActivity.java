@@ -37,7 +37,6 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.mobstat.StatService;
 import com.blankj.utilcode.util.CacheDiskUtils;
 import com.blankj.utilcode.util.FileIOUtils;
 import com.blankj.utilcode.util.NetworkUtils;
@@ -133,8 +132,6 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        StatService.onEvent(getApplicationContext(), "APP_START", "", 1);
 
         fragments = new Fragment[5];
         logsFragment = new LogsFragment();
@@ -406,7 +403,6 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.nav_advance:
                 try {
-                    StatService.onEvent(getApplicationContext(), "OPEN_SETTINGS", "", 1);
                     fabMode = 1;
                     getSupportActionBar().setTitle(getString(R.string.app_menu_advance));
                     fab.setVisibility(View.VISIBLE);
@@ -421,7 +417,6 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_source:
                 try {
                     fabMode = 2;
-                    StatService.onEvent(getApplicationContext(), "OPEN_ONLINE_MANAGER", "", 1);
                     getSupportActionBar().setTitle(getString(R.string.app_menu_source));
                     fab.setVisibility(View.INVISIBLE);
                     Rigger.getRigger(this).showFragment(Rigger.getRigger(fragments[2]).getFragmentTAG());
@@ -433,7 +428,6 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_rate:
                 try {
                     fabMode = 3;
-                    StatService.onEvent(getApplicationContext(), "OPEN_ABOUT", "", 1);
                     getSupportActionBar().setTitle(getString(R.string.app_menu_rate));
                     fab.setVisibility(View.INVISIBLE);
                     Rigger.getRigger(this).showFragment(Rigger.getRigger(fragments[3]).getFragmentTAG());

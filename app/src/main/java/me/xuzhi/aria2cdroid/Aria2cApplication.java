@@ -2,7 +2,6 @@ package me.xuzhi.aria2cdroid;
 
 import android.app.Application;
 
-import com.baidu.mobstat.StatService;
 import com.blankj.utilcode.util.Utils;
 
 /**
@@ -15,6 +14,5 @@ public class Aria2cApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Utils.init(this);
-        StatService.autoTrace(this, true, false);
     }
 }
