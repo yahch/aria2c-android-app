@@ -77,7 +77,7 @@ public class Aria2Service extends Service {
     public void onCreate() {
         super.onCreate();
         fileAria2c = new File(getFilesDir(), "aria2c");
-        sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "aria2 version:v1.34.0");
+        sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "aria2 version:v1.35.0");
         sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "app version:v" + BuildConfig.VERSION_NAME);
 
         try {
@@ -89,7 +89,7 @@ public class Aria2Service extends Service {
             e.printStackTrace();
         }
 
-        boolean exist = fileAria2c.exists() && (fileAria2c.length() == 4349452);
+        boolean exist = fileAria2c.exists() && (fileAria2c.length() == 5843568 );
 
         if (!exist) {
             try {
