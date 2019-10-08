@@ -1,6 +1,8 @@
 package me.xuzhi.aria2cdroid;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.baidu.mobstat.StatService;
 import com.blankj.utilcode.util.Utils;
@@ -16,5 +18,11 @@ public class Aria2cApplication extends Application {
         super.onCreate();
         Utils.init(this);
         StatService.autoTrace(this, true, false);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }

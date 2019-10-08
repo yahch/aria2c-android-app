@@ -20,12 +20,14 @@ import android.widget.Toast;
 
 import com.baidu.mobstat.StatService;
 import com.blankj.utilcode.util.CacheDiskUtils;
+import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.FileIOUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -77,7 +79,6 @@ public class Aria2Service extends Service {
     public void onCreate() {
         super.onCreate();
         fileAria2c = new File(getFilesDir(), "aria2c");
-        sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "aria2 version:v1.35.0");
         sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "app version:v" + BuildConfig.VERSION_NAME);
 
         try {
@@ -89,21 +90,44 @@ public class Aria2Service extends Service {
             e.printStackTrace();
         }
 
-        boolean exist = fileAria2c.exists() && (fileAria2c.length() == 5843568 );
+        String[] abis = DeviceUtils.getABIs();
+        boolean is64bit = (Arrays.binarySearch(abis, "arm64-v8a") >= 0);
 
-        if (!exist) {
-            try {
-                fileAria2c.delete();
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (is64bit) {
+            boolean exist = fileAria2c.exists() && (fileAria2c.length() == 5843568);
+            sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "aria2 version:v1.35.0");
+            if (!exist) {
+                try {
+                    fileAria2c.delete();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    InputStream ins = getResources().openRawResource(R.raw.aria2c);
+                    FileIOUtils.writeFileFromIS(fileAria2c, ins);
+                    Runtime.getRuntime().exec("chmod 777 " + fileAria2c.getAbsolutePath());
+                    sendMessage(ARIA2_SERVICE_BIN_CONSOLE, getString(R.string.aria_updated));
+                } catch (Exception e) {
+                    Log.e(TAG, "onCreate: ", e);
+                }
             }
-            try {
-                InputStream ins = getResources().openRawResource(R.raw.aria2c);
-                FileIOUtils.writeFileFromIS(fileAria2c, ins);
-                Runtime.getRuntime().exec("chmod 777 " + fileAria2c.getAbsolutePath());
-                sendMessage(ARIA2_SERVICE_BIN_CONSOLE, getString(R.string.aria_updated));
-            } catch (Exception e) {
-                Log.e(TAG, "onCreate: ", e);
+        } else {
+            boolean exist = fileAria2c.exists() && (fileAria2c.length() == 4349452);
+            sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "aria2 version:v1.34.0");
+            if (!exist) {
+                try {
+                    fileAria2c.delete();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    InputStream ins = getResources().openRawResource(R.raw.aria2c134);
+                    FileIOUtils.writeFileFromIS(fileAria2c, ins);
+                    Runtime.getRuntime().exec("chmod 777 " + fileAria2c.getAbsolutePath());
+                    sendMessage(ARIA2_SERVICE_BIN_CONSOLE, getString(R.string.aria_updated));
+                } catch (Exception e) {
+                    Log.e(TAG, "onCreate: ", e);
+                }
             }
         }
 

@@ -1,12 +1,14 @@
 package me.xuzhi.aria2cdroid.views;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
@@ -23,8 +25,10 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.FileIOUtils;
 import com.jkb.fragment.rigger.annotation.Puppet;
+import com.leon.lfilepickerlibrary.LFilePicker;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import me.xuzhi.aria2cdroid.R;
@@ -41,8 +45,8 @@ public class PrefsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private Switch swAutoUpdateTrackers, swUseSdcard, swIgnoreBattery;
-    private EditText editTrackersUrl;
-    private Button btnSaveTrackers;
+    private EditText editTrackersUrl, edtSavePath;
+    private Button btnSaveTrackers, btnChooseSavePath;
     private RadioButton rdoSource1, rdoSource2, rdoSourceCust;
 
     public PrefsFragment() {
@@ -54,10 +58,12 @@ public class PrefsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View vw = inflater.inflate(R.layout.fragment_prefs, container, false);
-
         swAutoUpdateTrackers = vw.findViewById(R.id.swAutoUpdateTrackers);
         swIgnoreBattery = vw.findViewById(R.id.swIgnoreBattery);
         swUseSdcard = vw.findViewById(R.id.swUseSDcard);
+
+        edtSavePath = vw.findViewById(R.id.edt_savepath);
+        btnChooseSavePath = vw.findViewById(R.id.btn_choose_savepath);
 
         swAutoUpdateTrackers.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -121,7 +127,7 @@ public class PrefsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     changeTrackerType(1);
-                    showHideCustFields(View.INVISIBLE);
+                    showHideCustFields(View.GONE);
 
                 }
             }
@@ -132,7 +138,7 @@ public class PrefsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     changeTrackerType(2);
-                    showHideCustFields(View.INVISIBLE);
+                    showHideCustFields(View.GONE);
                 }
             }
         });
@@ -162,9 +168,36 @@ public class PrefsFragment extends Fragment {
             }
         });
 
+        final Fragment me = this;
+
+        btnChooseSavePath.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new LFilePicker().withSupportFragment(me)
+                        .withRequestCode(13)
+                        .withChooseMode(false)
+                        .withStartPath(Environment.getExternalStorageDirectory().getAbsolutePath())
+                        .withTitle(getString(R.string.string_choose))
+                        .start();
+            }
+        });
+
         loadConfig();
 
         return vw;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 13) {
+                List<String> list = data.getStringArrayListExtra("paths");
+                for (String s : list) {
+                    Toast.makeText(getActivity(), s + "", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
     private void showHideCustFields(int status) {

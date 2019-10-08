@@ -5,10 +5,11 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "me.xuzhi.aria2cdroid"
+        multiDexEnabled true
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 191006
-        versionName "2.06"
+        versionCode 191008
+        versionName "2.08"
     }
     buildTypes {
         release {
@@ -33,6 +34,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
     implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.leon:lfilepickerlibrary:1.8.0'
+    compile 'com.android.support:multidex:1.0.1'
     implementation files('libs/Baidu_Mtj_android_3.9.3.9.jar')
 
 }

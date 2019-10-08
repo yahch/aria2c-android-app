@@ -79,5 +79,7 @@
     <string name="string_trackers_url_saved">Trackers 订阅已保存</string>
     <string name="string_trackers_sub">Trackers 订阅</string>
     <string name="string_customer_url">自定义</string>
+    <string name="string_choose">选择</string>
+    <string name="string_download_dir">下载位置</string>
 
 </resources>

@@ -89,5 +89,7 @@
     <string name="string_trackers_url_saved">Trackers subscription url save successful</string>
     <string name="string_trackers_sub">Trackers subscription</string>
     <string name="string_customer_url">customize</string>
+    <string name="string_choose">CHOOSE</string>
+    <string name="string_download_dir">dir</string>
 
 </resources>
