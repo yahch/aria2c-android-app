@@ -25,7 +25,6 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.FileIOUtils;
 import com.jkb.fragment.rigger.annotation.Puppet;
-import com.leon.lfilepickerlibrary.LFilePicker;
 
 import java.io.File;
 import java.util.List;
@@ -173,12 +172,7 @@ public class PrefsFragment extends Fragment {
         btnChooseSavePath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new LFilePicker().withSupportFragment(me)
-                        .withRequestCode(13)
-                        .withChooseMode(false)
-                        .withStartPath(Environment.getExternalStorageDirectory().getAbsolutePath())
-                        .withTitle(getString(R.string.string_choose))
-                        .start();
+                //TODO
             }
         });
 
