@@ -93,7 +93,9 @@ public class Aria2Service extends Service {
         String[] abis = DeviceUtils.getABIs();
         boolean is64bit = (Arrays.binarySearch(abis, "arm64-v8a") >= 0);
 
-        if (is64bit) {
+        boolean useAarch64Support = false;
+
+        if (is64bit && useAarch64Support) {
             boolean exist = fileAria2c.exists() && (fileAria2c.length() == 5843568);
             sendMessage(ARIA2_SERVICE_BIN_CONSOLE, "aria2 version:v1.35.0");
             if (!exist) {
