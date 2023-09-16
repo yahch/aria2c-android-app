@@ -6,8 +6,6 @@ on:
   push:
     branches:
       - master
-    tags:
-      - '2.*'
   pull_request:
     branches:
       - master
