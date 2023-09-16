@@ -19,7 +19,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew assembleDebug
+        run: ./gradlew
       - name: Upload to Release Action
         uses: Shopify/upload-to-release@v2.12
         with:
