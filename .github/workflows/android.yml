@@ -5,10 +5,10 @@ on:
     types: [published]
   push:
     branches:
-      - master
+      - b1
   pull_request:
     branches:
-      - master
+      - b1
 
 jobs:
   build:
